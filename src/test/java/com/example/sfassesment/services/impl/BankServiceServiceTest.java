@@ -26,6 +26,7 @@ class BankServiceServiceTest {
         repository = Mockito.mock(BankDataRepository.class);
         publisher = Mockito.mock(EventPublisherService.class);
 
+        when(repository.updateAccountBalance(anyLong(),any(BigDecimal.class))).thenReturn(1);
         when(repository.accountExists(anyLong())).thenReturn(true);
     }
 
@@ -34,7 +35,7 @@ class BankServiceServiceTest {
         // Arrange
         when(repository.getBalance(anyLong())).thenReturn(BigDecimal.valueOf(100));
 
-        BankServiceService bankServiceService = new BankServiceService(repository, null);
+        BankServiceService bankServiceService = new BankServiceService(repository, publisher);
         var withdrawalAmount = 2000L;
 
         // Act
